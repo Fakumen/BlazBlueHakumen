@@ -9,14 +9,12 @@ namespace BlazBlueFighter
         private readonly Sprite[] Frames;
         public readonly bool Looping = false;
         public readonly AnimationSpeed Speed;
-        public readonly int FrameInterval = 100;
         private readonly int LoopStart = 0;
         private readonly int LoopEnd = int.MaxValue;
         public int CurrentFrameId { get; private set; }
         public int Length => Frames.Length;
         public static event Action AnimationEnded;
-
-        //public Sprite this[int frameIndex] => Frames[frameIndex];
+        
         public Sprite GetFrame() => Frames[CurrentFrameId];
 
         public void NextFrame()
@@ -29,13 +27,6 @@ namespace BlazBlueFighter
                     AnimationEnded?.Invoke();
                     CurrentFrameId = Length - 1;
                 }
-        }
-
-        public void Play()
-        {
-            StageForm.FrameTimer.Stop();
-            StageForm.FrameTimer.Interval = (int)Speed;
-            StageForm.FrameTimer.Tick += (send, args) => NextFrame();
         }
 
         public void Reset()
